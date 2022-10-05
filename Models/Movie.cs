@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace MvcMovie.Models
+namespace PDFerterDesktopNet.Models
 {
     public class Movie
     {

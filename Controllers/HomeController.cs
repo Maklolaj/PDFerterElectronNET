@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MvcMovie.Models;
 using PDFerterDesktopNet.Models;
 
 namespace PDFerterDesktopNet.Controllers
@@ -39,6 +38,7 @@ namespace PDFerterDesktopNet.Controllers
         [HttpPost]
         public IActionResult MergeResult(List<IFormFile> files)
         {
+            _logger.LogInformation("test");
             long size = files.Sum(f => f.Length);
             var file = new MyFile()
             {
@@ -47,24 +47,22 @@ namespace PDFerterDesktopNet.Controllers
             return View(file);
         }
 
+        [HttpGet]
         public IActionResult SplitResult()
         {
             return View();
         }
 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult SplitResult(List<IFormFile> files)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            long size = files.Sum(f => f.Length);
+            var file = new MyFile()
+            {
+                PdfFile = files[0]
+            };
+            return View(file);
         }
-
-        public IActionResult Test()
-        {
-
-            return View();
-        }
-
 
         // Pzy Submicie wołam index(file)
         [HttpPost]
@@ -78,5 +76,16 @@ namespace PDFerterDesktopNet.Controllers
             return View(file);
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Test()
+        {
+
+            return View();
+        }
     }
 }
