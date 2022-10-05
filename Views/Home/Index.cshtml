@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model MvcMovie.Models.MyFile
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Files</div>
+    <div class="panel-body">
+
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => modelItem.PdfFile.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => modelItem.PdfFile.Length)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
