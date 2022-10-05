@@ -30,6 +30,29 @@ namespace PDFerterDesktopNet.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult MergeResult()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MergeResult(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+            var file = new MyFile()
+            {
+                PdfFile = files[0]
+            };
+            return View(file);
+        }
+
+        public IActionResult SplitResult()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
