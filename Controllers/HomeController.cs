@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PDFerterDesktopNet.Core.Interfaces;
 using PDFerterDesktopNet.Models;
 
 namespace PDFerterDesktopNet.Controllers
@@ -14,9 +15,12 @@ namespace PDFerterDesktopNet.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IFileService _fileService;
+
+        public HomeController(ILogger<HomeController> logger, IFileService fileService)
         {
             _logger = logger;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
@@ -36,15 +40,11 @@ namespace PDFerterDesktopNet.Controllers
         }
 
         [HttpPost]
-        public IActionResult MergeResult(List<IFormFile> files)
+        public async Task<IActionResult> MergeResult(List<IFormFile> files)
         {
-            _logger.LogInformation("test");
-            long size = files.Sum(f => f.Length);
-            var file = new MyFile()
-            {
-                PdfFile = files[0]
-            };
-            return View(file);
+            var mergeResult = await _fileService.mergeTwoPDFs(files[0], files[1]);
+
+            return View(mergeResult);
         }
 
         [HttpGet]
