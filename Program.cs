@@ -14,6 +14,8 @@ namespace PDFerterDesktopNet
     {
         public static void Main(string[] args)
         {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
             CreateHostBuilder(args).Build().Run();
         }
 
