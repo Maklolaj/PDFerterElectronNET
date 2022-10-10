@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +51,13 @@ namespace PDFerterDesktopNet.Controllers
         public IActionResult SplitResult()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SplitResult(string index, IFormFile files)
+        {
+            var splitResult = await _fileService.splitPDF(files, Int32.Parse(index));
+            return File(splitResult[0], "application/pdf", "result1.pdf");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
