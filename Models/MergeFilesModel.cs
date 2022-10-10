@@ -13,4 +13,9 @@ namespace PDFerterDesktopNet.Models
         [AllowedExtensions(new string[] { ".pdf" })]
         public IFormFile PdfFileTwo { get; set; }
     }
+
+    public class MergeFilesResultModel
+    {
+        public IFormFile PdfFile { get; set; }
+    }
 }
