@@ -43,37 +43,13 @@ namespace PDFerterDesktopNet.Controllers
         public async Task<IActionResult> MergeResult(List<IFormFile> files)
         {
             var mergeResult = await _fileService.mergeTwoPDFs(files[0], files[1]);
-
-            return View(mergeResult);
+            return File(mergeResult, "application/pdf", "result.pdf");
         }
 
         [HttpGet]
         public IActionResult SplitResult()
         {
             return View();
-        }
-
-        [HttpPost]
-        public IActionResult SplitResult(List<IFormFile> files)
-        {
-            long size = files.Sum(f => f.Length);
-            var file = new MyFile()
-            {
-                PdfFile = files[0]
-            };
-            return View(file);
-        }
-
-        // Pzy Submicie wołam index(file)
-        [HttpPost]
-        public IActionResult Index(List<IFormFile> files)
-        {
-            long size = files.Sum(f => f.Length);
-            var file = new MyFile()
-            {
-                PdfFile = files[0]
-            };
-            return View(file);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
