@@ -39,5 +39,45 @@ namespace PDFerterDesktopNet.Core.Services
             byte[] docBytes = stream.ToArray();
             return docBytes;
         }
+
+        public async Task<List<byte[]>> splitPDF(IFormFile file, int splitIndex)
+        {
+            PdfDocument inputPDFDocument = PdfReader.Open(file.OpenReadStream(), PdfDocumentOpenMode.Import);
+            PdfDocument document1 = new PdfDocument();
+            PdfDocument document2 = new PdfDocument();
+
+            byte[] file1 = null;
+            byte[] file2 = null;
+
+            if (splitIndex <= inputPDFDocument.PageCount - 1 && splitIndex > 0)
+            {
+                // Create first PDF from page[0] to page[index]
+                for (int i = 0; i < splitIndex; i++)
+                {
+                    document1.AddPage(inputPDFDocument.Pages[i]);
+                }
+                using (MemoryStream stream1 = new MemoryStream())
+                {
+                    document1.Save(stream1, true);
+                    file1 = stream1.ToArray();
+                    stream1.Close();
+                }
+
+                // Create second PDF from page[index] to page[-1]
+                for (int i = splitIndex; i <= inputPDFDocument.PageCount - 1; i++)
+                {
+                    document2.AddPage(inputPDFDocument.Pages[i]);
+                }
+                using (MemoryStream stream2 = new MemoryStream())
+                {
+                    document2.Save(stream2, true);
+                    file2 = stream2.ToArray();
+                    stream2.Close();
+                }
+
+                return new List<byte[]>() { file1, file2 };
+            }
+            return null;
+        }
     }
 }
