@@ -11,5 +11,7 @@ namespace PDFerterDesktopNet.Core.Interfaces
         Task<byte[]> mergeTwoPDFs(IFormFile PdfFileOne, IFormFile PdfFileTwo);
 
         Task<List<byte[]>> splitPDF(IFormFile pdfFile, int splitIndex);
+
+        byte[] CreateZipResult(List<byte[]> files);
     }
 }

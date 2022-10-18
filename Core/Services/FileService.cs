@@ -79,5 +79,32 @@ namespace PDFerterDesktopNet.Core.Services
             }
             return null;
         }
+
+        public byte[] CreateZipResult(List<byte[]> result)
+        {
+            MemoryStream outputMemStream = new MemoryStream();
+
+            using (ZipOutputStream zipOutputStream = new ZipOutputStream(outputMemStream))
+            {
+                zipOutputStream.SetLevel(9);
+
+                // Put each PDF in ZIP file
+                for (int i = 0; i < result.Count; i++)
+                {
+                    ZipEntry entry = new ZipEntry($"splitResult{i + 1}.pdf");
+                    entry.DateTime = DateTime.Now;
+                    entry.IsUnicodeText = true;
+                    zipOutputStream.PutNextEntry(entry);
+
+                    zipOutputStream.Write(result[i]);
+
+                    zipOutputStream.CloseEntry();
+                }
+                zipOutputStream.Close();
+            }
+            byte[] byteArray = outputMemStream.ToArray();
+
+            return byteArray;
+        }
     }
 }
