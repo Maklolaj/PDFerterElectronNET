@@ -57,7 +57,8 @@ namespace PDFerterDesktopNet.Controllers
         public async Task<IActionResult> SplitResult(int index, IFormFile files)
         {
             var splitResult = await _fileService.splitPDF(files, index);
-            return File(splitResult[0], "application/pdf", "result1.pdf");
+            var zip = _fileService.CreateZipResult(splitResult);
+            return File(zip, "application/octet-stream", "SplitResult.zip");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
