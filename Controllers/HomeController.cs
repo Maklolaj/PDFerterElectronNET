@@ -54,9 +54,9 @@ namespace PDFerterDesktopNet.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SplitResult(string index, IFormFile files)
+        public async Task<IActionResult> SplitResult(int index, IFormFile files)
         {
-            var splitResult = await _fileService.splitPDF(files, Int32.Parse(index));
+            var splitResult = await _fileService.splitPDF(files, index);
             return File(splitResult[0], "application/pdf", "result1.pdf");
         }
 
