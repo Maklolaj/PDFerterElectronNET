@@ -3,8 +3,8 @@
 <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="MergeResult">
     <div class="form-group">
         <div class="col-md-10">
-            <p>Upload one or more files using this form:</p>
-            <input type="file" name="files" multiple />
+            <label class="form-label">Upload one or more files using this form:</label>
+            <input class="form-control" type="file" name="files" multiple />
         </div>
     </div>
     <div class="form-group">
@@ -13,3 +13,10 @@
         </div>
     </div>
 </form>
+
+<style>
+    input.form-control {
+        width: 30% !important;
+        padding: 0.19rem 0.75rem;
+    }
+</style>
