@@ -57,20 +57,12 @@ namespace PDFerterDesktopNet.Controllers
         public async Task<IActionResult> SplitResult(int index, IFormFile files)
         {
             var splitResult = await _fileService.splitPDF(files, index);
+            if (splitResult == null)
+            {
+                return View("Error");
+            }
             var zip = _fileService.CreateZipResult(splitResult);
             return File(zip, "application/octet-stream", "SplitResult.zip");
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult Test()
-        {
-
-            return View();
         }
     }
 }

@@ -42,6 +42,11 @@ namespace PDFerterDesktopNet.Core.Services
 
         public async Task<List<byte[]>> splitPDF(IFormFile file, int splitIndex)
         {
+            if (file == null)
+            {
+                return null;
+            }
+
             PdfDocument inputPDFDocument = PdfReader.Open(file.OpenReadStream(), PdfDocumentOpenMode.Import);
             PdfDocument document1 = new PdfDocument();
             PdfDocument document2 = new PdfDocument();
