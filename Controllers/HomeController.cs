@@ -44,6 +44,10 @@ namespace PDFerterDesktopNet.Controllers
         public async Task<IActionResult> MergeResult(List<IFormFile> files)
         {
             var mergeResult = await _fileService.mergeTwoPDFs(files[0], files[1]);
+            if (mergeResult == null)
+            {
+                return View("MergeResultError");
+            }
             return File(mergeResult, "application/pdf", "result.pdf");
         }
 
@@ -59,7 +63,7 @@ namespace PDFerterDesktopNet.Controllers
             var splitResult = await _fileService.splitPDF(files, index);
             if (splitResult == null)
             {
-                return View("Error");
+                return View("SplitResultError");
             }
             var zip = _fileService.CreateZipResult(splitResult);
             return File(zip, "application/octet-stream", "SplitResult.zip");
