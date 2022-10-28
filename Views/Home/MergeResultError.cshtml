@@ -1,11 +1,13 @@
 <div class="error d-flex justify-content-center">
     <div>Something went terribly wrong...</div>
     <div>Please check your inputs and try again</div>
+    @Html.ActionLink("Go back to Merge page", "MergeResult", "Home")
 </div>
 
 <style>
     .error {
-        margin-top: 50%;
+        margin-top: 20%;
+        margin-left: 20%;
         flex-flow: column;
     }
 </style>
