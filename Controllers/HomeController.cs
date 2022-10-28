@@ -43,12 +43,12 @@ namespace PDFerterDesktopNet.Controllers
         [HttpPost]
         public async Task<IActionResult> MergeResult(List<IFormFile> files)
         {
-            var mergeResult = await _fileService.mergeTwoPDFs(files[0], files[1]);
-            if (mergeResult == null)
+            if (files.Count == 2)
             {
-                return View("MergeResultError");
+                var mergeResult = await _fileService.mergeTwoPDFs(files[0], files[1]);
+                return File(mergeResult, "application/pdf", "result.pdf");
             }
-            return File(mergeResult, "application/pdf", "result.pdf");
+            return View("MergeResultError");
         }
 
         [HttpGet]
